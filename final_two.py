@@ -928,7 +928,7 @@ color_map = {
     'High': '#228B22',
     'Unknown': '#808080'  # Add a grey color for unknown data
 }
-    fig_tree = px.treemap(tree_data, path=['Job_Title', 'Performance_Level'], values='Number_of_Employees',
+fig_tree = px.treemap(tree_data, path=['Job_Title', 'Performance_Level'], values='Number_of_Employees',
                           color='Performance_Level',
                           color_discrete_map={'Low': '#FF4040', 'Medium': '#FFA500', 'High': '#228B22'}) if not tree_data.empty else px.treemap()
     st.plotly_chart(fig_tree, use_container_width=True)
