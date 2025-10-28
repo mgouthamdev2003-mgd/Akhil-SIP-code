@@ -931,7 +931,7 @@ color_map = {
 fig_tree = px.treemap(tree_data, path=['Job_Title', 'Performance_Level'], values='Number_of_Employees',
                           color='Performance_Level',
                           color_discrete_map={'Low': '#FF4040', 'Medium': '#FFA500', 'High': '#228B22'}) if not tree_data.empty else px.treemap()
-    st.plotly_chart(fig_tree, use_container_width=True)
+st.plotly_chart(fig_tree, use_container_width=True)
 with row1_col3:
     st.markdown("**Employee Count by Retention Risk Level and Job Title**")
     retention_count = filtered_df.groupby(['Job_Title', 'Retention_Risk_Level'])['Employee_ID'].count().reset_index() if not filtered_df.empty else pd.DataFrame()
