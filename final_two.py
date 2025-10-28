@@ -906,6 +906,28 @@ with row1_col2:
     st.markdown("**Performance Level Distribution by Job Title**")
     tree_data = filtered_df.groupby(['Job_Title', 'Performance_Level'])['Employee_ID'].count().reset_index() if not filtered_df.empty else pd.DataFrame()
     tree_data.rename(columns={'Employee_ID': 'Number_of_Employees'}, inplace=True)
+    # ... (Your code *before* line 909) ...
+
+# --- START: Add the new recommended solution here (around line 909) ---
+
+# 1. Create a copy to avoid modifying the original dataframe in cache
+tree_data_copy = tree_data.copy()
+
+# 2. Fill NaN values in the columns used in the 'path' and 'color'
+tree_data_copy['Job_Title'] = tree_data_copy['Job_Title'].fillna('Unknown Job Title')
+tree_data_copy['Performance_Level'] = tree_data_copy['Performance_Level'].fillna('Unknown')
+
+# 3. (Optional, but safe) Force the columns to be 'str' type
+tree_data_copy['Job_Title'] = tree_data_copy['Job_Title'].astype(str)
+tree_data_copy['Performance_Level'] = tree_data_copy['Performance_Level'].astype(str)
+
+# 4. Update your color map to handle the new 'Unknown' category
+color_map = {
+    'Low': '#FF4040', 
+    'Medium': '#FFA500', 
+    'High': '#228B22',
+    'Unknown': '#808080'  # Add a grey color for unknown data
+}
     fig_tree = px.treemap(tree_data, path=['Job_Title', 'Performance_Level'], values='Number_of_Employees',
                           color='Performance_Level',
                           color_discrete_map={'Low': '#FF4040', 'Medium': '#FFA500', 'High': '#228B22'}) if not tree_data.empty else px.treemap()
